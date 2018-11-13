@@ -400,4 +400,11 @@ public class Controller {
         });
         transitions.play();
     }
+    
+    public String toStingMatrice(Transform t) {
+		return ("|" + t.getMxx() + " ; " + t.getMxy() + " ; " + t.getMxz() + " ; " + t.getTx() + "|"
+				+ "|" + t.getMyx() + " ; " + t.getMyy() + " ; " + t.getMyz() + " ; " + t.getTy() + "|"
+				+ "|" + t.getMzx() + " ; " + t.getMzy() + " ; " + t.getMzz() + " ; " + t.getTz() + "|"
+				+ "|" + 0.0 + " ; "+ 0.0 + " ; " + 0.0 + " ; " + 1.0 + "|");		
+	}
 }
