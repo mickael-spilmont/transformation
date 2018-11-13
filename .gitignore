@@ -1,0 +1,17 @@
+# Eclipse
+bin/
+?/
+.classpath
+.project
+.settings
+.metadata
+
+# Itellij
+out/
+.idea
+*.ipr
+*.iws
+*.iml
+
+# Spécifique
+explore.txt
