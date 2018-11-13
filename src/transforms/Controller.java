@@ -68,6 +68,8 @@ public class Controller {
 //        Transformations
         transforms.add(new Translate(10, 10));
         transforms.add(new Rotate(10.0));
+//        test affichage matrice
+        System.out.println(toStringMatrice(new Translate(10 ,10)));
 //        Fin transformations
         
         show();
@@ -226,10 +228,10 @@ public class Controller {
 //        transitions.play();
     }
     
-    public String toStingMatrice(Transform t) {
-		return ("|" + t.getMxx() + " ; " + t.getMxy() + " ; " + t.getMxz() + " ; " + t.getTx() + "|"
-				+ "|" + t.getMyx() + " ; " + t.getMyy() + " ; " + t.getMyz() + " ; " + t.getTy() + "|"
-				+ "|" + t.getMzx() + " ; " + t.getMzy() + " ; " + t.getMzz() + " ; " + t.getTz() + "|"
+    public String toStringMatrice(Transform t) {
+		return ("|" + t.getMxx() + " ; " + t.getMxy() + " ; " + t.getMxz() + " ; " + t.getTx() + "|\n"
+				+ "|" + t.getMyx() + " ; " + t.getMyy() + " ; " + t.getMyz() + " ; " + t.getTy() + "|\n"
+				+ "|" + t.getMzx() + " ; " + t.getMzy() + " ; " + t.getMzz() + " ; " + t.getTz() + "|\n"
 				+ "|" + 0.0 + " ; "+ 0.0 + " ; " + 0.0 + " ; " + 1.0 + "|");		
 	}
 }
