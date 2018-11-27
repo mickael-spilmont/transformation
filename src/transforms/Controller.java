@@ -67,9 +67,9 @@ public class Controller {
         transforms.add(new Translate(90, 90));
         transforms.add(new Rotate(90.0).createConcatenation(new Translate(90, 90)));
 //        test affichage matrice
-        System.out.println(toStringMatrice(new Translate(80 ,90)));
+        //System.out.println(toStringMatrice(new Translate(80 ,90)));
         System.out.println();
-        System.out.println(toStringMatrice(new Rotate(70.0)));
+       // System.out.println(toStringMatrice(new Rotate(70.0)));
        // System.out.println(rowMaison(maisons[0]));
 //        Fin transformations
         
@@ -121,20 +121,5 @@ public class Controller {
 
     public void animate() {
 //		toDo
-    }
-    
-    public String toStringMatrice(Transform t) {
-		return ("|" + (int)(10*t.getMxx())/10.0 + " ; " + (int)(10*t.getMxy())/10.0 + " ; " + (int)(10*t.getMxz())/10.0 + " ; " + (int)(10*t.getTx())/10.0 + "|\n"
-				+ "|" + (int)(10*t.getMyx())/10.0 + " ; " + (int)(10*t.getMyy())/10.0 + " ; " + (int)(10*t.getMyz())/10.0 + " ; " + (int)(10*t.getTy())/10.0 + "|\n"
-				+ "|" + (int)(10*t.getMzx())/10.0 + " ; " + (int)(10*t.getMzy())/10.0 + " ; " + (int)(10*t.getMzz())/10.0 + " ; " + (int)(10*t.getTz())/10.0 + "|\n"
-				+ "|" + 0.0 + " ; "+ 0.0 + " ; " + 0.0 + " ; " + 1.0 + "|");		
-	}
-    
-    public String rowMaison(Maison m) {
-    	return ""+m.getLayoutX();
-    }
-    
-    private String rowMaison() {
-    	return ""+Maison.D0;
     }
 }
