@@ -60,16 +60,14 @@ public class Controller {
     }
 
     private void update() {
-        reset();
-//        if (cbt1.selectedProperty().getValue()) transforms.add(t1);
-//        if (cbr.selectedProperty().getValue()) transforms.add(rot);
-//        if (cbt2.selectedProperty().getValue()) transforms.add(t2);
-        
+        reset(); 
 //        Transformations
-        transforms.add(new Translate(10, 10));
-        transforms.add(new Rotate(10.0));
+        transforms.add(new Translate(90, 90));
+        transforms.add(new Rotate(90.0).createConcatenation(new Translate(90, 90)));
 //        test affichage matrice
-        System.out.println(toStringMatrice(new Translate(10 ,10)));
+        System.out.println(toStringMatrice(new Translate(80 ,90)));
+        System.out.println();
+        System.out.println(toStringMatrice(new Rotate(70.0)));
 //        Fin transformations
         
         show();
@@ -84,8 +82,6 @@ public class Controller {
 
     private void drawAdd(Maison m) {
         maisons.add(m);
-//      Ajouter les transformation pour afficher la maison en mode maths 
-//      m.getTransforms().add(e);
         pane.getChildren().add(m);
     }
 
@@ -118,120 +114,14 @@ public class Controller {
         update();
     }
 
-    private Transition animateT1(Maison m) {
-//        if ((cbt1.selectedProperty().getValue() && ((t1.getX() != 0.0) || (t1.getY() != 0.0)))) {
-//            TranslateTransition tt1 = new TranslateTransition(Duration.seconds(2.0), m);
-//            tt1.setCycleCount(1);
-//            tt1.setByX(t1.getX());
-//            tt1.setByY(t1.getY());
-//            tt1.setOnFinished(e -> {
-//                Maison m1 = new Maison();
-//                m1.setStroke(new Color(0.35, 0.35, 0.35, 1.0));
-//                m1.getTransforms().addAll(t1);
-//                drawAdd(m1);
-//            });
-//            return tt1;
-//        }
-        return null;
-    }
-
-    private Transition animateR(Maison m, Point2D ref1, Point2D ref2) {
-//        if ((cbr.selectedProperty().getValue()) && (r.getValue() != 0.0)) {
-//            ParallelTransition rt = new ParallelTransition();
-//
-//            RotateTransition rt1 = new RotateTransition(Duration.seconds(2.0), m);
-//            rt1.setCycleCount(1);
-//            rt1.setByAngle(rot.getAngle());
-//            rt.getChildren().add(rt1);
-//
-//            double radius = ref2.distance(math2infoX(0.0), math2infoY(0.0));
-//            if (radius > 0.0) {
-//                Path path = new Path();
-//                MoveTo moveTo = new MoveTo();
-//                moveTo.setX(ref1.getX());
-//                moveTo.setY(ref1.getY());
-//                ArcTo arcTo = new ArcTo();
-//                arcTo.setRadiusX(radius);
-//                arcTo.setRadiusY(radius);
-//                arcTo.setX(ref2.getX());
-//                arcTo.setY(ref2.getY());
-//                arcTo.setLargeArcFlag(false);
-//                if (r.getValue() > 0) {
-//                    arcTo.setSweepFlag(false);
-//                } else {
-//                    arcTo.setSweepFlag(true);
-//                }
-//                path.getElements().addAll(moveTo, arcTo);
-//
-//                PathTransition rt2 = new PathTransition(Duration.seconds(2.0), path, m);
-//                rt2.setCycleCount(1);
-//                rt2.setOrientation(PathTransition.OrientationType.NONE);
-//                rt.getChildren().add(rt2);
-//            }
-//
-//            rt.setOnFinished(e -> {
-//                Maison m2 = new Maison();
-//                m2.setStroke(new Color(0.60, 0.60, 0.60, 1.0));
-//                m2.getTransforms().addAll(rot, t1);
-//                drawAdd(m2);
-//            });
-//            return rt;
-//        }
-        return null;
-    }
-
-    private Transition animateT2(Maison m) {
-//        if ((cbt2.selectedProperty().getValue() && ((t2.getX() != 0.0) || (t2.getY() != 0.0)))) {
-//            TranslateTransition tt2 = new TranslateTransition(Duration.seconds(2.0), m);
-//            tt2.setCycleCount(1);
-//            tt2.setByX(t2.getX());
-//            tt2.setByY(t2.getY());
-//            tt2.setOnFinished(e -> {
-//                Maison m3 = new Maison();
-//                m3.setStroke(new Color(0.60, 0.60, 0.60, 1.0));
-//                m3.getTransforms().addAll(t2, rot, t1);
-//                pane.getChildren().add(m3);
-//                maisons.add(m3);
-//            });
-//            return tt2;
-//        }
-        return null;
-    }
-
     public void animate() {
-//        drawClear();
-//
-//        Maison mobile = new Maison();
-//        drawAdd(mobile);
-//
-//        Maison initiale = new Maison();
-//        initiale.setStroke(color(0));
-//        drawAdd(initiale);
-//
-//        Point2D ref0 = new Point2D(math2infoX(0.0) + Maison.CENTER_X, math2infoY(0.0) + Maison.CENTER_Y);
-////        Point2D ref1 = t1.transform(ref0);
-////        Point2D ref2 = rot.transform(ref1);
-////        Point2D ref3 = rot.transform(ref2);
-////
-////        SequentialTransition transitions = new SequentialTransition();
-////        Transition tt1 = animateT1(mobile);
-////        if (tt1 != null) transitions.getChildren().add(tt1);
-////        Transition rt = animateR(mobile, ref1, ref2);
-////        if (rt != null) transitions.getChildren().add(rt);
-////        Transition tt2 = animateT2(mobile);
-////        if (tt2!= null) transitions.getChildren().add(tt2);
-//
-//        transitions.setOnFinished(e -> {
-//            pane.getChildren().remove(mobile);
-//            show();
-//        });
-//        transitions.play();
+//		toDo
     }
     
     public String toStringMatrice(Transform t) {
-		return ("|" + t.getMxx() + " ; " + t.getMxy() + " ; " + t.getMxz() + " ; " + t.getTx() + "|\n"
-				+ "|" + t.getMyx() + " ; " + t.getMyy() + " ; " + t.getMyz() + " ; " + t.getTy() + "|\n"
-				+ "|" + t.getMzx() + " ; " + t.getMzy() + " ; " + t.getMzz() + " ; " + t.getTz() + "|\n"
+		return ("|" + (int)(10*t.getMxx())/10.0 + " ; " + (int)(10*t.getMxy())/10.0 + " ; " + (int)(10*t.getMxz())/10.0 + " ; " + (int)(10*t.getTx())/10.0 + "|\n"
+				+ "|" + (int)(10*t.getMyx())/10.0 + " ; " + (int)(10*t.getMyy())/10.0 + " ; " + (int)(10*t.getMyz())/10.0 + " ; " + (int)(10*t.getTy())/10.0 + "|\n"
+				+ "|" + (int)(10*t.getMzx())/10.0 + " ; " + (int)(10*t.getMzy())/10.0 + " ; " + (int)(10*t.getMzz())/10.0 + " ; " + (int)(10*t.getTz())/10.0 + "|\n"
 				+ "|" + 0.0 + " ; "+ 0.0 + " ; " + 0.0 + " ; " + 1.0 + "|");		
 	}
 }
