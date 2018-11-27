@@ -39,11 +39,13 @@ public class Controller {
 
     private ArrayList<Transform> transforms = new ArrayList<>();
     private ArrayList<Maison> maisons = new ArrayList<>();
+    private Transform convertMath = new Translate(300, 300).createConcatenation(new Scale(30.0, 30.0));
 
     private void reset() {
         transforms.clear();
-        Grille grille = new Grille();
+        Grille grille = new Grille(convertMath.getMxx());
 //        Ajourer des transformation pour afficher la grille en mode maths
+        grille.getTransforms().add(convertMath);
         pane.getChildren().add(grille);
     }
 
@@ -68,6 +70,7 @@ public class Controller {
         System.out.println(toStringMatrice(new Translate(80 ,90)));
         System.out.println();
         System.out.println(toStringMatrice(new Rotate(70.0)));
+       // System.out.println(rowMaison(maisons[0]));
 //        Fin transformations
         
         show();
@@ -82,6 +85,7 @@ public class Controller {
 
     private void drawAdd(Maison m) {
         maisons.add(m);
+        m.getTransforms().add(convertMath);
         pane.getChildren().add(m);
     }
 
@@ -90,7 +94,7 @@ public class Controller {
         drawClear();
 
 //        On créer la maison originale
-        Maison m0 = new Maison();
+        Maison m0 = new Maison(convertMath.getMxx());
         m0.setStroke(color(1.00));
 //        On ajoute la maison à la scène
         drawAdd(m0);
@@ -98,11 +102,12 @@ public class Controller {
 //        Pour chaque transformation de l'arraylist transforms, on créer une nouvelle maison
 //        sur laquelle on applique les transformations successives
         for (int idx = 0 ; idx <= transforms.size() ; idx++) {
-            Maison m = new Maison();
+            Maison m = new Maison(convertMath.getMxx());
             m.setStroke(color(idx));
             for (int ti = idx-1 ; ti >= 0 ; ti--) {
 //            	On demande le calcule matriciel
                 m.getTransforms().add(transforms.get(ti));
+                
             }
 //            On ajoute la nouvelle maison à la scène
             drawAdd(m);
@@ -124,4 +129,12 @@ public class Controller {
 				+ "|" + (int)(10*t.getMzx())/10.0 + " ; " + (int)(10*t.getMzy())/10.0 + " ; " + (int)(10*t.getMzz())/10.0 + " ; " + (int)(10*t.getTz())/10.0 + "|\n"
 				+ "|" + 0.0 + " ; "+ 0.0 + " ; " + 0.0 + " ; " + 1.0 + "|");		
 	}
+    
+    public String rowMaison(Maison m) {
+    	return ""+m.getLayoutX();
+    }
+    
+    private String rowMaison() {
+    	return ""+Maison.D0;
+    }
 }
