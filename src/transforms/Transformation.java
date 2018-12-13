@@ -10,10 +10,10 @@ import javafx.scene.transform.Transform;
 public interface Transformation {
 	default String showMatrix() {
 		Transform t = (Transform)this;
-		return ("|" + (int)(10*t.getMxx())/10.0 + " ; " + (int)(10*t.getMxy())/10.0 + " ; " + (int)(10*t.getMxz())/10.0 + " ; " + (int)(10*t.getTx())/10.0 + "|\n"
-				+ "|" + (int)(10*t.getMyx())/10.0 + " ; " + (int)(10*t.getMyy())/10.0 + " ; " + (int)(10*t.getMyz())/10.0 + " ; " + (int)(10*t.getTy())/10.0 + "|\n"
-				+ "|" + (int)(10*t.getMzx())/10.0 + " ; " + (int)(10*t.getMzy())/10.0 + " ; " + (int)(10*t.getMzz())/10.0 + " ; " + (int)(10*t.getTz())/10.0 + "|\n"
-				+ "|" + 0.0 + " ; "+ 0.0 + " ; " + 0.0 + " ; " + 1.0 + "|");
+		return ("|" + (int)(100*t.getMxx())/100.0 + " ; " + (int)(100*t.getMxy())/100.0 + " ; " + (int)(100*t.getMxz())/100.0 + "|\n"
+				+ "|" + (int)(100*t.getMyx())/100.0 + " ; " + (int)(100*t.getMyy())/100.0 + " ; " + (int)(100*t.getMyz())/100.0 + "|\n"
+				+ "|" + (int)(100*t.getMzx())/100.0 + " ; " + (int)(100*t.getMzy())/100.0 + " ; " + (int)(100*t.getMzz())/100.0 + "|\n"
+				);
 	}
 
 	default String rowTransform() {

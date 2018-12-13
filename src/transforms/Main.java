@@ -16,6 +16,10 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("FC2 the best !");
         primaryStage.setScene(new Scene(root, MAX_X, MAX_Y + 300));
+//        primaryStage.setFullScreen(true);
+//        primaryStage.setMaximized(true);
+        primaryStage.setWidth(800.0);
+        primaryStage.setHeight(800.0);
         primaryStage.show();
     }
 
