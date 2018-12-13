@@ -25,11 +25,16 @@ import javafx.util.Duration;
 
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import static transforms.Constants.*;
 
 public class Controller {
+	
+	protected Collection<Compostition> compositions;
+	protected transforms.DrawContext drawContext;
 
+	
     @FXML
     public Canvas canvas;
 
@@ -117,11 +122,22 @@ public class Controller {
     }
 
     public void initialize() {
-        reset();
         update();
     }
 
-    public void animate() {
+    public void animateParallel() {
 //		toDo
+    }
+    
+    public void animateSequence() {
+//		toDo
+    }
+    
+    protected void dump() {
+    	
+    }
+    
+    public void setup() {
+    	
     }
 }

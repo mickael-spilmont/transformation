@@ -8,6 +8,8 @@ import javafx.scene.transform.Transform;
  * @author Mickael
  */
 public interface Transformation {
+	
+	
 	default String showMatrix() {
 		Transform t = (Transform)this;
 		return ("|" + (int)(100*t.getMxx())/100.0 + " ; " + (int)(100*t.getMxy())/100.0 + " ; " + (int)(100*t.getMxz())/100.0 + "|\n"

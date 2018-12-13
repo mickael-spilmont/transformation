@@ -29,7 +29,7 @@ class Grille extends Group {
 		axeY.setStroke(Color.BLACK);
 		axeY.setStrokeWidth(2.0 / d);
 		
-		t=new Text(-1, 0.5, "-0");
+		t=new Text(-0.8, 0.5, String.format("%2.0f",0.0));
 		t.setFont(new Font(1));
 		t.setScaleX(0.4);
 		t.setScaleY(0.4);
@@ -43,8 +43,8 @@ class Grille extends Group {
 				lx.setStroke(Color.GREY);
 				lx.setStrokeWidth(1.0 / d);
 				
-				t = new Text(x-1, 0.5, String.valueOf((int)x));
-				t.setFont(new Font(1));
+				t = new Text(x-0.8, 0.5, String.format("%2.0f",x));
+				t.setFont(new Font("Arial", 1));
 				t.setScaleX(0.4);
 				t.setScaleY(0.4);
 				
@@ -61,7 +61,7 @@ class Grille extends Group {
 				ly.setStroke(Color.GREY);
 				ly.setStrokeWidth(1.0 / d);
 				
-				t = new Text(-0.7, y+0.5, String.valueOf((int)-y));
+				t = new Text(-0.7, y+0.5, String.format("%2.0f",-y));
 				t.setFont(new Font("Arial", 1));
 				t.setScaleX(0.4);
 				t.setScaleY(0.4);
