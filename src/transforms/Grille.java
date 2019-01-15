@@ -1,74 +1,73 @@
 package transforms;
 
+
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.scene.transform.Transform;
 
-import static transforms.Constants.*;
-
-class Grille extends Group {
-
-	Line axeX;
-	Line axeY;
-	Line lx;
-	Line ly;
-
-	Text t;
+public class Grille extends Group {
 
 
-	public Grille(double d) {
-		super();
-		System.out.println("ok");
-		axeX = new Line(ZERO_X, MIN_Y, ZERO_X, MAX_Y);
-		axeX.setStroke(Color.BLACK);
-		axeX.setStrokeWidth(2.0 / d);
-
-		axeY = new Line(MIN_X, ZERO_Y, MAX_X, ZERO_Y);
-		axeY.setStroke(Color.BLACK);
-		axeY.setStrokeWidth(2.0 / d);
-		
-		t=new Text(-0.8, 0.5, String.format("%2.0f",0.0));
-		t.setFont(new Font(1));
-		t.setScaleX(0.4);
-		t.setScaleY(0.4);
-
-		this.getChildren().addAll(axeX, axeY, t);
-
-		double x = MIN_X + ((ZERO_X - MIN_X) % INC_X)+1 ;
-		while (x <= MAX_X-1) {
-			if (x != ZERO_X) {
-				lx = new Line(x, MIN_Y, x, MAX_Y);
-				lx.setStroke(Color.GREY);
-				lx.setStrokeWidth(1.0 / d);
-				
-				t = new Text(x-0.8, 0.5, String.format("%2.0f",x));
-				t.setFont(new Font("Arial", 1));
-				t.setScaleX(0.4);
-				t.setScaleY(0.4);
-				
-
-				this.getChildren().addAll(lx,t);
-			}
-			x += INC_X;
-		}
-
-		double y = MIN_Y + ((ZERO_Y - MIN_Y) % INC_Y)+1 ;
-		while (y <= MAX_Y-1) {
-			if (y != ZERO_Y) {
-				ly = new Line(MIN_X, y, MAX_X, y);
-				ly.setStroke(Color.GREY);
-				ly.setStrokeWidth(1.0 / d);
-				
-				t = new Text(-0.7, y+0.5, String.format("%2.0f",-y));
-				t.setFont(new Font("Arial", 1));
-				t.setScaleX(0.4);
-				t.setScaleY(0.4);
-				System.out.println((int)y);
-				this.getChildren().addAll(ly,t);
-			}
-			y += INC_Y;
-		}
-	}
+        public Grille() {
+            Line axeX = new Line(0.0, -10.0, 0.0, 10.0);
+            axeX.setStroke((Paint)Color.RED);
+            axeX.setStrokeWidth(0.05);
+            Line axeY = new Line(-10.0, 0.0, 10.0, 0.0);
+            axeY.setStroke((Paint)Color.BLUE);
+            axeY.setStrokeWidth(0.05);
+            Text text1 = new Text(0.2,0,"0");
+            text1.setFont(new Font("Serif", 0.5));
+            text1.setScaleX(0.5);
+            text1.setScaleY(-0.5);
+            text1.setY(-0.2);
+            text1.setTextAlignment(TextAlignment.CENTER);
+            this.getChildren().add(text1);
+            
+            this.getChildren().addAll((Node[])new Node[]{axeX, axeY});
+            
+            for (double x = -9.0; x <= 9.0; x += 1.0) {
+            	if(x == 0) continue;
+                Line ligneX = new Line(x, -10.0, x, 10.0);
+                ligneX.setStrokeWidth(0.025);
+                ligneX.setStroke((Paint)Color.LIGHTGREY);
+                
+                
+                Text text = new Text(x+0.0,0, String.format("%3.0f",x));
+                text.setFont(new Font("Serif", 0.5));
+                
+                text.setY(-0.2);
+                text.setScaleX(0.5);
+                text.setScaleY(-0.5);
+                text.setTextAlignment(TextAlignment.CENTER);
+               
+                
+                this.getChildren().addAll(text,(Node)ligneX);
+               
+                
+            }
+            for (double y = -9.0; y <= 9.0; y += 1.0) {
+                Line ligneY = new Line(-10.0, y, 10.0, y);
+                if(y == 0.0) continue;
+                ligneY.setStroke((Paint)Color.LIGHTGREY);
+                ligneY.setStrokeWidth(0.05);
+                
+                Text text = new Text(0,y-0.2, String.valueOf((int)y));
+                text.setFont(new Font("Serif", 0.5));
+                
+               
+                text.setScaleX(0.5);
+                text.setScaleY(-0.5);
+                text.setX(0.2);
+                text.setTextAlignment(TextAlignment.CENTER);
+                
+                this.getChildren().addAll(text,(Node)ligneY);
+            }
+            this.getTransforms().add((Transform)Constants.SCREEN_TRANSFORM);
+        }
 }

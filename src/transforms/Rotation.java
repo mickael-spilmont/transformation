@@ -1,44 +1,60 @@
 package transforms;
 
+
+import java.util.ArrayList;
 import java.util.List;
 
+import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
-import javafx.scene.Node;
+import javafx.beans.value.WritableValue;
 import javafx.scene.transform.Rotate;
-import javafx.scene.transform.Scale;
-import javafx.scene.transform.Transform;
+import javafx.util.Duration;
 
-public class Rotation extends AbstractTransformation{
+public class Rotation extends Rotate implements Transformation{
 
-	public Rotation(Transform transform) {
-		super(transform);
-	}
+	double angle;
+	double pivotXx;
+	double pivotYy;
 	
-	public Rotation(double angle, double cx, double cy){
-		super(new Rotate(angle, cx, cy));
+	public double getAnglee() {
+		return angle;
 	}
 
-	void addStartKeyValues(List<KeyValue> keyValues) {
-		
+	public double getPivotXx() {
+		return pivotXx;
 	}
-	
-	void addStopKeyValues(List<KeyValue> keyValues) {
-		
+
+	public double getPivotYy() {
+		return pivotYy;
 	}
+
+	public Rotation(double angle, double cx, double cy) {
+        this.setAngle(angle);
+        this.setPivotX(cx);
+        this.setPivotY(cy);
+        this.angle = angle;
+        this.pivotXx = cx;
+        this.pivotYy = cy;
+    }
+
+    @Override
+    public boolean estIdentite() {
+        return this.getAngle() == 0.0;
+    }
+
+    @Override
+    public List<KeyFrame> getKeyFrame(Duration d) {
+        ArrayList<KeyFrame> list = new ArrayList<KeyFrame>();
+        if (d != Duration.seconds((double)0.0)) {
+            list.add(new KeyFrame(Duration.seconds((double)0.0), new KeyValue[]{new KeyValue((WritableValue)this.angleProperty(), (Object)0.0)}));
+        }
+        list.add(new KeyFrame(d, new KeyValue[]{new KeyValue((WritableValue)this.angleProperty(), (Object)0.0)}));
+        list.add(new KeyFrame(d.add(Duration.seconds((double)2.0)), new KeyValue[]{new KeyValue((WritableValue)this.angleProperty(), (Object)this.getAngle())}));
+        return list;
+    }
+
 	
-	protected Node getTips() {
-		return null;
-		
-	}
+
 	
-	String showStartKeyValues() {
-		return null;
-		
-	}
-	
-	String showStopKeyValues() {
-		return null;
-		
-	}
-	
+
 }

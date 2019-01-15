@@ -1,143 +1,103 @@
 package transforms;
 
-import javafx.animation.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
+
+
+import static transforms.Constants.IDENTITY;
+
+import java.io.IOException;
+
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
-import javafx.geometry.Bounds;
-import javafx.geometry.Point2D;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.*;
-import javafx.scene.text.Text;
-import javafx.scene.transform.Rotate;
-import javafx.scene.transform.Scale;
-import javafx.scene.transform.Transform;
-import javafx.scene.transform.Translate;
-import javafx.util.Duration;
-
-import java.awt.event.MouseListener;
-import java.util.ArrayList;
-import java.util.Collection;
-
-import static transforms.Constants.*;
 
 public class Controller {
-	
-	protected Collection<Compostition> compositions;
-	protected transforms.DrawContext drawContext;
-
-	
-    @FXML
-    public Canvas canvas;
 
     @FXML
-    public Pane pane;
+    private Pane pane;
+    
+    @FXML
+    public ScrollPane trans;
+    
+    private Translation t1=new Translation(0.0, 2.0);
+    private Homothetie s1 = new Homothetie(2, 2);
+    private Rotation r1 = new Rotation(90.0, 0.0, 0.0);
+    
+    private DrawContext drawContext;
+    private  Composition composition = new Composition();
+    
 
-    //--------------- Translation 1
-
-    private ArrayList<Transform> transforms = new ArrayList<>();
-    private ArrayList<Maison> maisons = new ArrayList<>();
-    private Transform convertMath = new Translate(300, 300).createConcatenation(new Scale(30.0, 30.0));
-   
-
-    private void reset() {
-        transforms.clear();
-        Grille grille = new Grille(convertMath.getMxx());
-//        Ajourer des transformation pour afficher la grille en mode maths
-        grille.getTransforms().add(convertMath);
-        pane.getChildren().add(grille);
-    }
-
-    private Color color(double value) {
-        if (value == 1.0) return Color.BLUE;
-        return new Color(value, value, value, 1.0);
-    }
-
-    private Color color(int idx) {
-        if (idx == 0) return Color.BLUE;
-        if (idx == transforms.size()) return Color.BLACK;
-        double value = 1.0 - (double) idx / transforms.size();
-        return color(value);
-    }
-
-    private void update() {
-        reset(); 
-//        Transformations
-        transforms.add(new Translate(90, 90));
-        transforms.add(new Rotate(90.0).createConcatenation(new Translate(90, 90)));
-//        test affichage matrice
-        //System.out.println(toStringMatrice(new Translate(80 ,90)));
-        System.out.println();
-       // System.out.println(toStringMatrice(new Rotate(70.0)));
-       // System.out.println(rowMaison(maisons[0]));
-//        Fin transformations
-        
-        show();
-    }
-
-    private void drawClear() {
-        for (Maison m : maisons) {
-            pane.getChildren().remove(m);
-        }
-        maisons.clear();
-    }
-
-    private void drawAdd(Maison m) {
-        maisons.add(m);
-        m.getTransforms().add(convertMath);
-        pane.getChildren().add(m);
-    }
-
-    private void show() {
-//    	On efface la scene
-        drawClear();
-
-//        On créer la maison originale
-        Maison m0 = new Maison(convertMath.getMxx());
-        m0.setStroke(color(1.00));
-//        On ajoute la maison à la scène
-        drawAdd(m0);
-
-//        Pour chaque transformation de l'arraylist transforms, on créer une nouvelle maison
-//        sur laquelle on applique les transformations successives
-        for (int idx = 0 ; idx <= transforms.size() ; idx++) {
-            Maison m = new Maison(convertMath.getMxx());
-            m.setStroke(color(idx));
-            for (int ti = idx-1 ; ti >= 0 ; ti--) {
-//            	On demande le calcule matriciel
-                m.getTransforms().add(transforms.get(ti));
-                
-            }
-//            On ajoute la nouvelle maison à la scène
-            drawAdd(m);
-        }
-    }
-
-    public void initialize() {
+    public void initialize() throws Exception {
+        drawContext = new DrawContext(pane);
+        pane.getChildren().add(new Grille());
+        composition.add(s1);
+        composition.add(t1);
+        composition.add(r1);
         update();
     }
 
-    public void animateParallel() {
-//		toDo
+    private void update() throws IOException {
+    	
+        try {
+			show();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
-    public void animateSequence() {
-//		toDo
+    private void show() throws Exception {
+        drawContext.drawClear();
+        
+        Maison m1 = new Maison();
+        for (int index = 0 ; index <= composition.size() ; index++) {
+            if (index == 0) {
+                composition.drawStep(0, drawContext);
+                composition.afficheMatrices(null,IDENTITY, m1);
+            } else {
+                composition.drawStep(index, drawContext);
+
+                try {
+                	//System.out.println("ok");
+                	composition.afficheMatrices(composition.getAtomique(index-1), composition.getSuivies(index-1), m1);
+                } catch (TransformationException e) {
+                }
+            }
+        }
     }
     
-    protected void dump() {
+    public void animate() throws NullPointerException, IndexOutOfBoundsException{
+    	Maison maisonAnimée = new Maison();
+    	Maison maisonAnimée2 = new Maison();
+        drawContext.drawClear();
+        composition.drawStep(0, drawContext);
+
+        Timeline timeline = new Timeline();
+
+        maisonAnimée.setStroke(Constants.SCHEMA_MOUVEMENT);
+        drawContext.drawAdd(maisonAnimée);
+        composition.animate(timeline, maisonAnimée, drawContext);
+
+        
+        maisonAnimée2.setStroke(Constants.SCHEMA_ORIGINE);
+        drawContext.drawAdd(maisonAnimée2);
+        timeline.play();
+    }
+    
+    private Color stringToColor(String c) {
+    	
+    	switch(c.toUpperCase()) {
+    	case "ROUGE" : return Color.RED;
+    	case "BLEU" : return Color.BLUE;
+    	case "GRIS" : return Color.GRAY;
+    	case "VERT" : return Color.GREEN;
+    	case "NOIR" : return Color.BLACK;
+    	default : return Color.BLACK;
+    	
+    	}
     	
     }
     
-    public void setup() {
-    	
-    }
+    
 }

@@ -16,9 +16,7 @@ implements Motif{
 	MotifConcret(Collection<Double> points) {
 		
 		pl = new Polyline();
-		pl.getPoints().addAll(
-				points
-				);
+		pl.getPoints().addAll(points);
 	}
 	@Override
 	public Motif clone() {
@@ -46,5 +44,4 @@ implements Motif{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

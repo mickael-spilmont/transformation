@@ -1,63 +1,72 @@
 package transforms;
 
+
 import javafx.collections.ObservableList;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polyline;
-import static transforms.Constants.*;
+import javafx.scene.transform.Transform;
 
 class Maison extends Group {
 
-	private static final double SCALE = 1.5;
-	private static final double X0 = ZERO_X;
-	private static final double X1 = ZERO_X + SCALE * INC_X;
-	private static final double Y0 = ZERO_Y;
-	private static final double Y1 = ZERO_Y - SCALE * INC_Y;
-	private static final double MIDDLE_X = (X0 + X1)/2.0;
-	private static final double Y2 = ZERO_Y - 3 * SCALE * INC_Y / 2;
-	private static final double D0 = MIDDLE_X;
-	private static final double D1 = ZERO_X + 3 * SCALE * INC_X / 4;
-	private static final double DY = ZERO_Y - 3 * SCALE * INC_Y / 4;
+	private static final double X0 = 0.0;
+    private static final double X1 = 1.0;
+    private static final double Y0 = 0.0;
+    private static final double Y1 = 1.0;
+    private static final double MILLIEU_X = 0.5;
+    private static final double Y2 = 1.5;
+    private static final double D0 = 0.5;
+    private static final double D1 = 0.75;
+    private static final double DY = 0.75;
+    private static final double CENTRE_X = 0.5;
+    private static final double CENTRE_Y = 0.75;
+    private static final Point2D CENTRE = new Point2D(0.5, 0.75);
+    public Polyline pl = new Polyline();
+    
 
-	final static double CENTER_X = SCALE * INC_X / 2;
-	final static double CENTER_Y = -3 * SCALE * INC_Y / 4;
+    Maison() {
+        this.pl.getPoints().addAll(Constants.MATRIX_SCHEMA);
+        this.pl.setStroke((Paint)Constants.SCHEMA);
+        this.pl.setStrokeWidth(0.025);
+        this.getChildren().add((Node)this.pl);
+        this.getTransforms().add((Transform)Constants.SCREEN_TRANSFORM);
+    }
+    
 
-	private Polyline pl;
+    public Point2D getCenter() {
+        return CENTRE;
+    }
 
-	Maison(double d) {
-		super();
-		pl = new Polyline();
-		pl.getPoints().addAll(
-				X0, Y1,//a
-				MIDDLE_X, Y2,//b
-				X1, Y1,//c
-				X1, Y0,//d
-				D0, Y0,//e
-				D0, DY,//f
-				D1, DY,//g
-				D1, Y0,//h
-				X0, Y0,//i
-				X0, Y1//a
-				);
-		pl.setStroke(Color.BLUE);
-		pl.setStrokeWidth(2.0 / d);
-		this.getChildren().add(pl);
-	}
+    public ObservableList<Double> getPoints() {
+        return this.pl.getPoints();
+    }
 
-	public double getCenterX() {
-		return this.getLayoutBounds().getWidth();
-	}
+    void setStroke(Color color) {
+        this.pl.setStroke((Paint)color);
+    }
 
-	public double getCenterY() {
-		return this.getLayoutBounds().getHeight();
-	}
-
-	void setStroke(Color color) {
-		pl.setStroke(color);
-	}
-
-	public ObservableList<Double> getPoints() {
-		return pl.getPoints();
-	}
+    public String toString() {
+        String res = "[ ";
+        res = res + String.format("( %5.2f , %5.2f @ %5.2f )", (Double)this.pl.getPoints().get(0) + this.getTranslateX(), (Double)this.pl.getPoints().get(1) + this.getTranslateY(), this.getRotate());
+        res = res + ", ";
+        res = res + String.format("( %5.2f , %5.2f @ %5.2f )", (Double)this.pl.getPoints().get(2) + this.getTranslateX(), (Double)this.pl.getPoints().get(3) + this.getTranslateY(), this.getRotate());
+        res = res + " ]";
+        return res;
+    }
+    
+    public void setPl(Polyline pl) {
+    	this.getChildren().clear();
+    	this.getTransforms().clear();
+    	this.pl.getPoints().clear();
+    	this.pl = pl;
+    	
+    	this.getChildren().add((Node)this.pl);
+    	this.pl.setStroke((Paint)Constants.SCHEMA);
+        this.pl.setStrokeWidth(0.025);
+    	this.getTransforms().add((Transform)Constants.SCREEN_TRANSFORM);
+    }
+    
 }
