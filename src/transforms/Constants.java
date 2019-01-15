@@ -28,37 +28,14 @@ public class Constants {
     public static Transform IDENTITY = new Translate();
     
     public static Color SCHEMA = Color.BLUE;
-    public static Color SCHEMA_FIN = Color.BLUE;
-    public static Color SCHEMA_ETAPE = Color.BLACK;
+    public static Color SCHEMA_FIN = Color.GREEN;
+    public static Color SCHEMA_ETAPE = Color.GREY;
     public static Color SCHEMA_MOUVEMENT = Color.RED;
-    public static Color SCHEMA_ORIGINE = Color.GRAY;
+    public static Color SCHEMA_ORIGINE = Color.BLACK;
     
 
     public static Double[] MATRIX_SCHEMA = {0.0, 0.0, 0.0, 1.0, 0.5, 1.5, 1.0, 1.0, 1.0, 0.0, 0.5, 0.0, 0.5, 0.75, 0.75, 0.75, 0.75, 0.0, 0.0, 0.0};
     
     
-    public static void setMatrixSchema(Double[] matrix) {
-        MATRIX_SCHEMA = matrix;
-    }
-    
-    public static void setSchema(Color c) {
-    	SCHEMA = c;
-    }
-    
-    public static void setFin(Color c) {
-    	SCHEMA_FIN = c;
-    }
-    
-    public static void setEtape(Color c) {
-    	SCHEMA_ETAPE = c;
-    }
-    
-    public static void setMouvement(Color c) {
-    	SCHEMA_MOUVEMENT = c;
-    }
-    
-    public static void setOrigine(Color c) {
-    	SCHEMA_ORIGINE = c;
-    }
     
 }

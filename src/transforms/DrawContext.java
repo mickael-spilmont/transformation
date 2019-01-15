@@ -10,7 +10,7 @@ import javafx.scene.layout.Pane;
 public class DrawContext {
 
 	    private Pane pane;
-	    private ArrayList<Node> node = new ArrayList();
+	    private ArrayList<Node> node = new ArrayList<Node>();
 
 	    DrawContext(Pane pane) {
 	        this.pane = pane;
@@ -24,9 +24,7 @@ public class DrawContext {
 	    }
 
 	    void drawAdd(Node node) {
-	    	
 	    	this.node.add(node);
-	    	
 	        this.pane.getChildren().add((Node)node);
 	    }
 }

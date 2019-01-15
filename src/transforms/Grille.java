@@ -37,7 +37,6 @@ public class Grille extends Group {
                 ligneX.setStrokeWidth(0.025);
                 ligneX.setStroke((Paint)Color.LIGHTGREY);
                 
-                
                 Text text = new Text(x+0.0,0, String.format("%3.0f",x));
                 text.setFont(new Font("Serif", 0.5));
                 
@@ -46,10 +45,8 @@ public class Grille extends Group {
                 text.setScaleY(-0.5);
                 text.setTextAlignment(TextAlignment.CENTER);
                
-                
                 this.getChildren().addAll(text,(Node)ligneX);
-               
-                
+    
             }
             for (double y = -9.0; y <= 9.0; y += 1.0) {
                 Line ligneY = new Line(-10.0, y, 10.0, y);
@@ -60,7 +57,6 @@ public class Grille extends Group {
                 Text text = new Text(0,y-0.2, String.valueOf((int)y));
                 text.setFont(new Font("Serif", 0.5));
                 
-               
                 text.setScaleX(0.5);
                 text.setScaleY(-0.5);
                 text.setX(0.2);

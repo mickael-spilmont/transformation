@@ -12,31 +12,25 @@ import javafx.util.Duration;
 
 public class Homothetie extends Scale implements Transformation{
 
-	double scale;
-	double pivotXx;
-	double pivotYy;
+	double scaleY;
+	double scaleX;
 	
 	public Homothetie(double scale) {
 		super(scale,0.0,0.0);
 	}
 	
-	public Homothetie(double scale,double pivotY) {
-		super(scale,pivotY);
-		this.scale = scale;
-
-		this.pivotYy = pivotY;
+	public Homothetie(double scaleX,double scaleY) {
+		super(scaleX,scaleY);
+		this.scaleY = scaleX;
+		this.scaleX = scaleY;
 	}
 	
-	public double getScale() {
-		return scale;
+	public double getScaleY() {
+		return scaleY;
 	}
 
-	public double getPivotXx() {
-		return pivotXx;
-	}
-
-	public double getPivotYy() {
-		return pivotYy;
+	public double getScaleX() {
+		return scaleX;
 	}
 
 	public boolean estIdentite() {

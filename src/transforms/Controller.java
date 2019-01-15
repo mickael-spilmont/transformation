@@ -10,94 +10,75 @@ import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
+
 
 public class Controller {
 
-    @FXML
-    private Pane pane;
-    
-    @FXML
-    public ScrollPane trans;
-    
-    private Translation t1=new Translation(0.0, 2.0);
-    private Homothetie s1 = new Homothetie(2, 2);
-    private Rotation r1 = new Rotation(90.0, 0.0, 0.0);
-    
-    private DrawContext drawContext;
-    private  Composition composition = new Composition();
-    
+	@FXML
+	private Pane pane;
 
-    public void initialize() throws Exception {
-        drawContext = new DrawContext(pane);
-        pane.getChildren().add(new Grille());
-        composition.add(s1);
-        composition.add(t1);
-        composition.add(r1);
-        update();
-    }
+	@FXML
+	public ScrollPane trans;
 
-    private void update() throws IOException {
-    	
-        try {
+	private DrawContext drawContext;
+	private  Composition composition = new Composition();
+
+
+	public void initialize() throws Exception {
+		drawContext = new DrawContext(pane);
+		pane.getChildren().add(new Grille());
+		
+		composition.add(new Translation(0.0, 2.0));
+		composition.add(new Homothetie(2, 2));
+		composition.add(new Rotation(90.0, 0.0, 0.0));
+		
+		update();
+	}
+
+	private void update() throws IOException {
+
+		try {
 			show();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    }
-    
-    private void show() throws Exception {
-        drawContext.drawClear();
-        
-        Maison m1 = new Maison();
-        for (int index = 0 ; index <= composition.size() ; index++) {
-            if (index == 0) {
-                composition.drawStep(0, drawContext);
-                composition.afficheMatrices(null,IDENTITY, m1);
-            } else {
-                composition.drawStep(index, drawContext);
+	}
 
-                try {
-                	//System.out.println("ok");
-                	composition.afficheMatrices(composition.getAtomique(index-1), composition.getSuivies(index-1), m1);
-                } catch (TransformationException e) {
-                }
-            }
-        }
-    }
-    
-    public void animate() throws NullPointerException, IndexOutOfBoundsException{
-    	Maison maisonAnimée = new Maison();
-    	Maison maisonAnimée2 = new Maison();
-        drawContext.drawClear();
-        composition.drawStep(0, drawContext);
+	private void show() throws Exception {
+		drawContext.drawClear();
 
-        Timeline timeline = new Timeline();
+		Dessin m1 = new Dessin();
+		for (int index = 0 ; index <= composition.size() ; index++) {
+			if (index == 0) {
+				composition.drawStep(0, drawContext);
+				composition.afficheMatrices(null,IDENTITY, m1);
+			} else {
+				composition.drawStep(index, drawContext);
 
-        maisonAnimée.setStroke(Constants.SCHEMA_MOUVEMENT);
-        drawContext.drawAdd(maisonAnimée);
-        composition.animate(timeline, maisonAnimée, drawContext);
+				try {
+					composition.afficheMatrices(composition.getAtomique(index-1), composition.getSuivies(index-1), m1);
+				} catch (TransformationException e) {
+				}
+			}
+		}
+	}
 
-        
-        maisonAnimée2.setStroke(Constants.SCHEMA_ORIGINE);
-        drawContext.drawAdd(maisonAnimée2);
-        timeline.play();
-    }
-    
-    private Color stringToColor(String c) {
-    	
-    	switch(c.toUpperCase()) {
-    	case "ROUGE" : return Color.RED;
-    	case "BLEU" : return Color.BLUE;
-    	case "GRIS" : return Color.GRAY;
-    	case "VERT" : return Color.GREEN;
-    	case "NOIR" : return Color.BLACK;
-    	default : return Color.BLACK;
-    	
-    	}
-    	
-    }
-    
-    
+	public void animate() throws NullPointerException, IndexOutOfBoundsException{
+		Dessin maisonAnime = new Dessin();
+		Dessin maisonAnime2 = new Dessin();
+		Timeline timeline = new Timeline();
+
+		drawContext.drawClear();
+		composition.drawStep(0, drawContext);
+
+		maisonAnime.setStroke(Constants.SCHEMA_MOUVEMENT);
+		drawContext.drawAdd(maisonAnime);
+		composition.animate(timeline, maisonAnime, drawContext);
+
+		maisonAnime2.setStroke(Constants.SCHEMA_ORIGINE);
+		drawContext.drawAdd(maisonAnime2);
+
+		timeline.play();
+	}
 }

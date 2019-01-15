@@ -1,7 +1,7 @@
 package transforms;
 
 
-public enum Row {
+public enum Range {
 
 	    X,
 	    Y,
