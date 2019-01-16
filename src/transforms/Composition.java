@@ -60,38 +60,38 @@ public class Composition {
 
 	private String afficheRange(Transform transformation, Range row) {
 		if (transformation == null) {
-			return "                  ";
+			return "                 ";
 		}
 		switch (CompositionSturct.CompositionRange[row.ordinal()]) {
 		case 1: {
-			return String.format("%5.2f %5.2f %+6.1f", transformation.getMxx(), transformation.getMxy(), transformation.getTx());
+			return String.format("%5.2f %5.2f %+5.1f", transformation.getMxx(), transformation.getMxy(), transformation.getTx());
 		}
 		case 2: {
-			return String.format("%5.2f %5.2f %+6.1f", transformation.getMxy(), transformation.getMyy(), transformation.getTy());
+			return String.format("%5.2f %5.2f %+5.1f", transformation.getMxy(), transformation.getMyy(), transformation.getTy());
 		}
 		case 3: {
-			return String.format("%5.2f %5.2f %+6.1f", 0.0, 0.0, 1.0);
+			return String.format("%5.2f %5.2f %+5.1f", 0.0, 0.0, 1.0);
 		}
 		}
 		return null;
 	}
 
-	private void afficheMatriceSchema(ObservableList<Double> liste, Range row, Transform t) throws NullPointerException, IndexOutOfBoundsException {
+	private void afficheMatriceSchema(ObservableList<Double> liste, Range range, Transform t) throws NullPointerException, IndexOutOfBoundsException {
 
-		backFor: for (int i = 0; i < liste.size(); i += 2) {
+		for (int i = 0; i < liste.size(); i += 2) {
 			Point2D point = t.transform(new Point2D(((Double)liste.get(i)).doubleValue(), ((Double)liste.get(i + 1)).doubleValue()));
 
-			switch (CompositionSturct.CompositionRange[row.ordinal()]) {
+			switch (CompositionSturct.CompositionRange[range.ordinal()]) {
 			case 1: {
-				System.out.print(String.format("%6.2f ", point.getX()));
-				continue backFor;
+				System.out.print(String.format("%5.2f ", point.getX()));
+				break;
 			}
 			case 2: {
-				System.out.print(String.format("%6.2f ", point.getY()));
+				System.out.print(String.format("%5.2f ", point.getY()));
 				break;
 			}
 			case 3: {
-				System.out.print(String.format("%6.2f ", 1.0));
+				System.out.print(String.format("%5.2f ", 1.0));
 				break;
 			}
 			}
@@ -102,10 +102,10 @@ public class Composition {
 		ObservableList<Double> liste = m.getPoints();
 		if (transform1 == null) {
 
-			System.out.println("                   | ===== ===== ====== |");
+			System.out.println("                  | ===== ===== ===== |");
 		} else {
 
-			System.out.println("===== ===== ====== | ===== ===== ====== |");
+			System.out.println("===== ===== ===== | ===== ===== ===== |");
 		}
 		for (Range row : Range.values()) {
 			System.out.print(this.afficheRange(transform1, row) + " | " + this.afficheRange(transform2, row));
@@ -115,9 +115,9 @@ public class Composition {
 		}          
 	}
 
-	private Color color(int idx) {
-		if (idx == 0) return Constants.SCHEMA;
-		if (idx == this.transforms.size()) return Constants.SCHEMA_FIN;
+	private Color color(int index) {
+		if (index == 0) return Constants.SCHEMA;
+		if (index == this.transforms.size()) return Constants.SCHEMA_FIN;
 		return Constants.SCHEMA_ETAPE;
 	}
 
@@ -130,7 +130,7 @@ public class Composition {
 		drawContext.drawAdd((Node)m);
 	}
 
-	private KeyFrame drawHouseKeyFrame(Duration last, int index, DrawContext drawContext) {
+	private KeyFrame DessinKeyFrame(Duration last, int index, DrawContext drawContext) {
 		return new KeyFrame(last, e -> this.drawStep(index, drawContext), new KeyValue[0]);
 	}
 
@@ -142,7 +142,7 @@ public class Composition {
 			mobile.getTransforms().add(1, (Transform)transformation.getTransform());
 			timeline.getKeyFrames().addAll(transformation.getKeyFrame(last));
 			last = last.add(Duration.seconds((double)2.0));
-			timeline.getKeyFrames().add((KeyFrame)this.drawHouseKeyFrame(last, i + 1, drawContext));
+			timeline.getKeyFrames().add((KeyFrame)this.DessinKeyFrame(last, i + 1, drawContext));
 		}
 	}
 }
