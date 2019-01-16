@@ -28,9 +28,11 @@ public class Controller {
 		drawContext = new DrawContext(pane);
 		pane.getChildren().add(new Grille());
 		
+		//liste de transformations
 		composition.add(new Translation(0.0, 2.0));
 		composition.add(new Homothetie(2, 2));
 		composition.add(new Rotation(90.0, 0.0, 0.0));
+		composition.add(new Homothetie(-1, -1));
 		
 		update();
 	}

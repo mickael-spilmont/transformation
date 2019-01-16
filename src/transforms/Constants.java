@@ -33,7 +33,7 @@ public class Constants {
     public static Color SCHEMA_MOUVEMENT = Color.RED;
     public static Color SCHEMA_ORIGINE = Color.BLACK;
     
-
+    //liste de points du shema
     public static Double[] MATRIX_SCHEMA = {0.0, 0.0, 0.0, 1.0, 0.5, 1.5, 1.0, 1.0, 1.0, 0.0, 0.5, 0.0, 0.5, 0.75, 0.75, 0.75, 0.75, 0.0, 0.0, 0.0};
     
     
